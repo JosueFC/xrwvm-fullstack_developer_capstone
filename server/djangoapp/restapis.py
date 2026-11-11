@@ -39,10 +39,31 @@ def analyze_review_sentiments(text):
 
 # Add post_review function here if requested in future steps
 def post_review(data_dict):
-    request_url = backend_url+"/insert_review"
+    request_url = backend_url.rstrip("/") + "/insert_review"
+
+    print(f"POST to {request_url}")
+    print(f"Review fields: {list(data_dict.keys())}")
+
     try:
-        response = requests.post(request_url,json=data_dict)
-        print(response.json())
-        return response.json()
-    except:
-        print("Network exception occurred")
+        response = requests.post(
+            request_url,
+            json=data_dict,
+            timeout=15
+        )
+
+        print(f"Backend HTTP status: {response.status_code}")
+        print(f"Backend response: {response.text}")
+
+        # Raise an exception for HTTP 4xx or 5xx errors
+        response.raise_for_status()
+
+        result = response.json()
+
+        if result is None:
+            raise ValueError("Backend returned null")
+
+        return result
+
+    except (requests.RequestException, ValueError) as err:
+        print(f"Review submission failed: {err}")
+        raise
