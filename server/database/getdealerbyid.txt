@@ -1,0 +1,1 @@
+[{"_id":"6af3cdcfa02d963b6af54bbd","id":15,"city":"San Antonio","state":"Texas","address":"5057 Pankratz Hill","zip":"78225","lat":"29.3875","long":"-98.5245","short_name":"Tempsoft","full_name":"Tempsoft Car Dealership","__v":0}]
